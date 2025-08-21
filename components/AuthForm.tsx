@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ControllerFieldState, ControllerRenderProps, FieldValues, useForm, UseFormStateReturn } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
@@ -78,7 +78,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           uid: userCredentials.user.uid,
           name: name!,
           email,
-          password
+          password,
         })
 
         if (!result?.success) {

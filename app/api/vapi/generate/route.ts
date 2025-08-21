@@ -1,6 +1,7 @@
 import { generateText } from "ai";
 import { google } from '@ai-sdk/google'
 import { db } from "@/firebase/admin";
+
 export async function GET() {
     return Response.json({
         success: true,

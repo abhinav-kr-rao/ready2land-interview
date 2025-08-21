@@ -1,6 +1,6 @@
 'use server'
 
-import { auth, db } from "firebase/admin";
+import { auth, db } from "@/firebase/admin";
 import { cookies } from "next/headers";
 
 export async function signup(params: SignUpParams) {
@@ -18,7 +18,6 @@ export async function signup(params: SignUpParams) {
             name, email
         })
 
-        console.log(params);
         return {
             success: true,
             message: "Account created"
@@ -47,7 +46,10 @@ export async function signin(params: SignInParams) {
     }
     catch (err) {
         console.log(err);
-
+        return {
+            success: false,
+            message: "Failed to login"
+        }
     }
 }
 
