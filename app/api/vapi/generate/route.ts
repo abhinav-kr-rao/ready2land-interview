@@ -14,8 +14,9 @@ export async function POST(request: Request) {
     const { type, role, level, techstack, amount, userid } = await request.json();
 
     try {
-
-        const promptCommand = `Prepare questions for a job interview.
+        const { text: questions } = await generateText({
+            model: google('gemini-2.0-flash-001'),
+            prompt: `Prepare questions for a job interview.
         The job role is ${role}.
         The job experience level is ${level}.
         The tech stack used in the job is: ${techstack}.
@@ -27,10 +28,7 @@ export async function POST(request: Request) {
         ["Question 1", "Question 2", "Question 3"]
         
         Thank you! <3
-    `;
-        const { text: questions } = await generateText({
-            model: google('gemini-2.0-flash-001'),
-            prompt: promptCommand
+    `
         })
 
         const interview = {
