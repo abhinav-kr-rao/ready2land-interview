@@ -2,6 +2,7 @@
 
 import { auth, db } from "@/firebase/admin";
 import { cookies } from "next/headers";
+import { signOut, getAuth } from "firebase/auth";
 
 export async function signup(params: SignUpParams) {
     const { uid, name, email } = params;
@@ -103,3 +104,17 @@ export async function isAuthenticated() {
     return !!user;
 
 }
+
+
+// export async function signout() {
+//     try {
+//         const auth = getAuth();
+//         await signOut(auth);
+//         console.log("Signed out success");
+        
+//     }
+//     catch (err) {
+//         console.log("error signing out", err);
+
+//     }
+// }
