@@ -4,7 +4,7 @@ import React from 'react'
 
 const page = async () => {
     const user = await getCurrentUser();
-    console.log(user);
+    // console.log(user);
 
     return (
         <>
@@ -12,7 +12,7 @@ const page = async () => {
                 Interview generation
             </h3>
 
-            <Agent userName={user?.name} type='generate' userId={user?.id} />
+            <Agent userName={user!.name} type='generate' userId={user?.id} />
         </>
     )
 }

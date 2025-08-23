@@ -71,7 +71,7 @@ const Agent = ({ userName, userId, type }: AgentProps) => {
             router.push('/');
         }
 
-    }, [isSpeaking, callStatus, messages]);
+    }, [type, userId, callStatus, messages]);
 
 
     const handleCall = async () => {
@@ -91,7 +91,13 @@ const Agent = ({ userName, userId, type }: AgentProps) => {
     }
 
 
-    const lastMessage = messages[messages.length - 1].content;
+
+
+
+    const lastMessage = messages[messages.length - 1]?.content;
+    // console.log("last msg", lastMessage);
+
+
 
     const isCall_inactive_or_finished = callStatus === CallStatus.FINISHED || callStatus === CallStatus.INACTIVE;
 
