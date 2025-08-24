@@ -16,7 +16,7 @@ const firebaseConfig = {
     measurementId: "G-GYHXT5SBWT"
 };
 
-console.log("API key = ", process.env.FIREBASE_API_KEY);
+// console.log("API key = ", process.env.FIREBASE_API_KEY);
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

@@ -16,8 +16,8 @@ enum CallStatus {
 }
 
 interface SavedMessages {
-    role: "user" | "system" | "assistant",
-    content: string
+    role: "user" | "system" | "assistant";
+    content: string;
 }
 
 const Agent = ({ userName, userId, type }: AgentProps) => {

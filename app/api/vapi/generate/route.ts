@@ -49,7 +49,7 @@ export async function POST(request: Request) {
         console.error(err);
         return Response.json({
             success: false,
-            msg: err
+            error: err
         }, { status: 500 })
     }
 } 

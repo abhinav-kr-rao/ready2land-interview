@@ -1,8 +1,8 @@
 'use server'
 
 import { auth, db } from "@/firebase/admin";
+import { doc } from "firebase/firestore";
 import { cookies } from "next/headers";
-import { signOut, getAuth } from "firebase/auth";
 
 export async function signup(params: SignUpParams) {
     const { uid, name, email } = params;
@@ -90,7 +90,7 @@ export async function getCurrentUser(): Promise<User | null> {
         return {
             ...userRecord.data(),
             id: userRecord.id
-        } as User
+        } as User;
     }
     catch (err) {
         console.log(err);
@@ -105,6 +105,15 @@ export async function isAuthenticated() {
 
 }
 
+
+export async function getInterviewByUserID(userId:string):Promise<Interview[]|null> {
+    const interviews= await db.collection("interviews").where('userId','==',userId).orderBy('createdAt','desc').get();
+
+    return interviews.docs.map((doc)=>({
+        id:doc.id,
+        ...doc.data()
+    }) )as Interview[];
+}
 
 // export async function signout() {
 //     try {

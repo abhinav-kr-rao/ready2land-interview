@@ -1,10 +1,15 @@
 import InterviewCard from "@/components/InterviewCard";
 import { Button } from "@/components/ui/button";
 import { dummyInterviews } from "@/constants";
+import { getCurrentUser, getInterviewByUserID } from "@/lib/actions/auth.action";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const user = await getCurrentUser();
+  const interviews = await getInterviewByUserID(user!.id);
+
+  const hasPastInterviews = interviews!.length > 0;
   return (
     <>
       <section className=" card-cta">
@@ -33,11 +38,15 @@ export default function Home() {
         </h2>
         <div className="interview-section">
 
-          {dummyInterviews.map((interview) => {
-            console.log("Dummy");
-            return (<InterviewCard key={interview.id} {...interview} />)
-          }
-          )}
+          {
+            hasPastInterviews ? (
+              dummyInterviews.map((interview) => {
+
+                return (<InterviewCard key={interview.id} {...interview} />)
+              }
+              )) : (<p>
+                You have not taken any interviews yet.
+              </p>)}
 
         </div>
       </section>
