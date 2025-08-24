@@ -126,6 +126,12 @@ export async function getLatestInterviews(params:GetLatestInterviewsParams):Prom
     }) )as Interview[];
 }
 
+export async function getInterviewByID(id:string):Promise<Interview|null> {
+    const interviews= await db.collection("interviews").doc(id).get();
+
+    return interviews.data() as Interview|null;
+}
+
 // export async function signout() {
 //     try {
 //         const auth = getAuth();
