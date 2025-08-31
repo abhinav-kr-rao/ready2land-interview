@@ -107,7 +107,8 @@ const Agent = ({ userName, userId, type, interviewId, questions }: AgentProps) =
 
         if (type === 'generate') {
 
-            await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+            await vapi.start(undefined, undefined, undefined, process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+
                 variableValues: {
                     username: userName,
                     userid: userId
@@ -120,7 +121,8 @@ const Agent = ({ userName, userId, type, interviewId, questions }: AgentProps) =
                 formattedQuestions = questions.map((question) => `- ${question}`).join('/n');
             }
 
-            await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+            await vapi.start(interviewer, undefined, undefined, undefined, {
+
                 variableValues: {
                     questions: formattedQuestions
                 }
