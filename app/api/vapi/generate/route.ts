@@ -1,6 +1,7 @@
-import { generateText } from "ai";
+import { generateObject, generateText } from "ai";
 import { google } from '@ai-sdk/google'
 import { db } from "@/firebase/admin";
+import z from "zod";
 
 export async function GET() {
     return Response.json({
@@ -10,13 +11,7 @@ export async function GET() {
 }
 
 
-export async function POST(request: Request) {
-    const { type, role, level, techstack, amount, userid } = await request.json();
-
-    try {
-        const { text: questions } = await generateText({
-            model: google('gemini-2.0-flash-001'),
-            prompt: `Prepare questions for a job interview.
+const PROMPT = (role: string, level: string, techstack: string, type: string, amount: number) => `Prepare questions for a job interview.
         The job role is ${role}.
         The job experience level is ${level}.
         The tech stack used in the job is: ${techstack}.
@@ -29,12 +24,25 @@ export async function POST(request: Request) {
         
         Thank you! <3
     `
+
+export async function POST(request: Request) {
+    const { type, role, level, techstack, amount, userid } = await request.json();
+
+    try {
+        const { object: questions } = await generateObject({
+            model: google('gemini-2.5-flash-lite'),
+            schema: z.object({
+                questions: z.array(z.string())
+            }),
+            prompt: PROMPT(role, level, techstack, type, amount)
         })
+
+        console.log("Questions by AI are ", questions);
 
         const interview = {
             role, type, level,
             techstack: techstack.split(','),
-            questions: JSON.parse(questions),
+            questions: questions.questions,
             userId: userid,
             finalized: true,
             createdAt: new Date().toISOString()

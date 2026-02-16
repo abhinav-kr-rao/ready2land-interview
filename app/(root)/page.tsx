@@ -3,9 +3,14 @@ import { Button } from "@/components/ui/button";
 import { getCurrentUser, getInterviewByUserID, getLatestInterviews } from "@/lib/actions/auth.action";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const user = await getCurrentUser();
+
+  if (!user) {
+    redirect('/sign-in')
+  }
   const [interviews, pastInterviews] = await Promise.all(
     [await getLatestInterviews({ userId: user!.id }), await getInterviewByUserID(user!.id)])
 

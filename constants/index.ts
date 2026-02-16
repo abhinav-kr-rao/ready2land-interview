@@ -103,7 +103,7 @@ export const interviewer: CreateAssistantDTO = {
     "Hello! Thank you for taking the time to speak with me today. I'm excited to learn more about you and your experience.",
   transcriber: {
     provider: "deepgram",
-    model: "nova-2",
+    model: "nova-3",
     language: "en",
   },
   voice: {
@@ -116,8 +116,8 @@ export const interviewer: CreateAssistantDTO = {
     useSpeakerBoost: true,
   },
   model: {
-    provider: "openai",
-    model: "gpt-4",
+    provider: "google",
+    model: "gemini-2.5-flash-lite",
     messages: [
       {
         role: "system",
@@ -157,33 +157,13 @@ End the conversation on a polite and positive note.
 
 export const feedbackSchema = z.object({
   totalScore: z.number(),
-  categoryScores: z.tuple([
+  categoryScores: z.array(
     z.object({
-      name: z.literal("Communication Skills"),
+      name: z.string(),
       score: z.number(),
       comment: z.string(),
     }),
-    z.object({
-      name: z.literal("Technical Knowledge"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Problem Solving"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Cultural Fit"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Confidence and Clarity"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-  ]),
+  ),
   strengths: z.array(z.string()),
   areasForImprovement: z.array(z.string()),
   finalAssessment: z.string(),

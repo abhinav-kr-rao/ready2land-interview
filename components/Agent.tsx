@@ -103,6 +103,10 @@ const Agent = ({ userName, userId, type, interviewId, questions }: AgentProps) =
 
 
     const handleCall = async () => {
+
+        if (!process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID) {
+            throw new Error("Missing VAPI workflow ID");
+        }
         setCallStatus(CallStatus.CONNECTING);
 
         if (type === 'generate') {
